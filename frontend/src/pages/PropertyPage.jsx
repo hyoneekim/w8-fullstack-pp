@@ -2,12 +2,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 
-const PropertyPage = () => {
+const PropertyPage = ({isAuth}) => {
     const navigate = useNavigate();
   const {id} = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const token = user? user.token : null;
 
   useEffect(()=>{
     const fetchProperty = async() =>{
@@ -31,7 +34,8 @@ const PropertyPage = () => {
   const deleteProperty = async(id) =>{
     try{
       const res = await fetch(`/api/properties/${id}`,{
-        method : "DELETE"
+        method : "DELETE",
+        headers: {Authorization: `Bearer ${token}`}
       });
       if(!res.ok){
         throw new Error("Failed to delete property")
@@ -56,8 +60,12 @@ const PropertyPage = () => {
       <p>Zip code: {property?.location.zipCode}</p>
       <p>Size: {property?.squareFeet}</p>
       <p>Year built: {property?.yearBuilt}</p>
+      {isAuth &&
+        <div>
       <button onClick={()=>{deleteProperty(property._id)}}>Delete</button>
       <button onClick={()=> navigate(`/edit-property/${property._id}`)}>Edit</button>
+      </div>
+      }
     </div>
   )
 }

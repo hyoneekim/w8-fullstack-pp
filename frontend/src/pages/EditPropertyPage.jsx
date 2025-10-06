@@ -19,6 +19,8 @@ const EditPropertyPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const token = user? user.token: null;
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -71,7 +73,7 @@ const EditPropertyPage = () => {
     try {
       const res = await fetch(`/api/properties/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${token}` },
         body: JSON.stringify(editedProperty)
       });
 

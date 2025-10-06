@@ -14,12 +14,17 @@ const AddPropertyPage = () => {
   const [zipCode, setZipCode] = useState('');
   const [squareFeet, setSquareFeet] = useState('');
   const [yearBuilt, setYearBuilt] = useState('');
+  
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const token = user? user.token: null;
 
   const addProperty = async (newProperty) => {
     try {
       const res = await fetch('/api/properties', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+         },
         body: JSON.stringify(newProperty),
       });
 
