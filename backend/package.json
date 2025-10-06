@@ -21,6 +21,7 @@
     "glob": "10.4.2"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

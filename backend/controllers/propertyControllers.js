@@ -42,7 +42,7 @@ const getPropertyById = async (req, res) => {
 
 
   } catch (error) {
-    res.status(404).json({ message: "Property not found" })
+    res.status(500).json({ message: "Property getting property" })
   }
 };
 
