@@ -8,10 +8,15 @@ const {
 } = require("../controllers/propertyControllers");
 
 const router = express.Router();
+const requireAuth = require("../middleware/requireAuth")
 
 router.get("/", getAllProperties);
-router.post("/", createProperty);
 router.get("/:propertyId", getPropertyById);
+
+
+router.use(requireAuth)
+
+router.post("/", createProperty);
 router.put("/:propertyId", updateProperty);
 router.delete("/:propertyId", deleteProperty);
 
